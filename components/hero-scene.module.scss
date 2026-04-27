@@ -1,0 +1,280 @@
+.intro {
+  position: relative;
+  width: 100vw;
+  height: 185vh;
+  min-height: 72rem;
+  cursor: default;
+  overflow: clip;
+}
+
+.intro::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 16rem;
+  background: linear-gradient(180deg, rgba(9, 9, 9, 0), #090909 78%);
+  z-index: 2;
+  pointer-events: none;
+}
+
+.trigger {
+  position: absolute;
+  inset: 0;
+}
+
+.bgScaler {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg {
+  width: 100%;
+  height: 118%;
+  background-size: cover;
+  background-position: center;
+  filter: saturate(0.82) contrast(1.02) brightness(0.88);
+}
+
+.overlayGrid {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: 26vw minmax(0, 1fr) 24vw;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100%;
+  padding: 8rem 2rem 4rem;
+}
+
+.topCopy,
+.bottomCopy {
+  max-width: 21rem;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: rgba(248, 244, 235, 0.92);
+}
+
+.topCopy {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+
+.bottomCopy {
+  grid-column: 1;
+  grid-row: 3;
+  align-self: end;
+}
+
+.commandments {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: center;
+  max-width: 18rem;
+  overflow: hidden;
+}
+
+.commandments p {
+  margin: 0;
+  color: rgba(248, 244, 235, 0.78);
+  text-transform: uppercase;
+  font-size: clamp(0.95rem, 1.8vw, 1.6rem);
+  line-height: 0.92;
+}
+
+.center {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+  position: relative;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.centerMask {
+  position: absolute;
+  width: min(32vw, 26rem);
+  aspect-ratio: 0.82;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: linear-gradient(180deg, rgba(8, 8, 8, 0.15), rgba(8, 8, 8, 0.55));
+  backdrop-filter: blur(3px);
+}
+
+.centerCard {
+  position: absolute;
+  inset: 9% 9% 11%;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.08), transparent 36%),
+    linear-gradient(180deg, rgba(14, 14, 14, 0.35), rgba(8, 8, 8, 0.7));
+}
+
+.monogram {
+  font-family: var(--font-display), serif;
+  font-size: clamp(10rem, 22vw, 18rem);
+  line-height: 0.88;
+  letter-spacing: -0.08em;
+  color: rgba(248, 244, 235, 0.94);
+}
+
+.centerText {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  justify-items: center;
+  gap: 0.15rem;
+  width: 100%;
+}
+
+.topTitle,
+.name,
+.accent {
+  overflow: hidden;
+  display: block;
+  font-family: var(--font-display), serif;
+  text-transform: uppercase;
+}
+
+.topTitle {
+  margin-top: -10vh;
+  font-size: clamp(3.4rem, 7.2vw, 7rem);
+}
+
+.name {
+  font-size: clamp(5.4rem, 13vw, 11rem);
+  line-height: 0.9;
+}
+
+.accent {
+  font-size: clamp(2.2rem, 5vw, 4.4rem);
+  color: var(--brand-soft);
+}
+
+.caption {
+  margin-top: 1rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+
+.noise {
+  margin-top: 0.6rem;
+  font-size: 0.95rem;
+  letter-spacing: 0.28em;
+}
+
+.logoWall {
+  grid-column: 3;
+  grid-row: 2;
+  align-self: center;
+  justify-self: end;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  font-size: clamp(1rem, 2vw, 1.8rem);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 235, 0.28);
+  user-select: none;
+}
+
+.floatingBox {
+  grid-column: 3;
+  grid-row: 3;
+  align-self: end;
+  justify-self: end;
+  width: min(100%, 21rem);
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(8, 8, 8, 0.64);
+  backdrop-filter: blur(14px);
+}
+
+.boxTitle {
+  margin: 0 0 0.75rem;
+  color: var(--brand-soft);
+  font-size: 0.76rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.floatingBox p:last-of-type {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.metrics span {
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--line);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+}
+
+@media (max-width: 1100px) {
+  .intro {
+    height: 165vh;
+  }
+
+  .overlayGrid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto auto auto;
+    gap: 1.5rem;
+    padding-top: 7rem;
+  }
+
+  .topCopy,
+  .commandments,
+  .center,
+  .logoWall,
+  .bottomCopy,
+  .floatingBox {
+    grid-column: 1;
+    justify-self: stretch;
+  }
+
+  .topCopy {
+    grid-row: 1;
+  }
+
+  .center {
+    grid-row: 2;
+    min-height: 32rem;
+  }
+
+  .commandments {
+    grid-row: 3;
+    max-width: none;
+  }
+
+  .logoWall {
+    grid-row: 4;
+    writing-mode: horizontal-tb;
+    justify-self: start;
+  }
+
+  .bottomCopy {
+    grid-row: 5;
+    max-width: none;
+  }
+
+  .floatingBox {
+    position: static;
+    width: 100%;
+  }
+}

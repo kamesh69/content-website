@@ -1,0 +1,64 @@
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  background: #e55139;
+  color: #090909;
+}
+
+.compact {
+  background: #d24d35;
+}
+
+.lines {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.line {
+  flex: 1;
+  width: 100%;
+  background: rgba(9, 9, 9, 0.08);
+  transform-origin: top;
+  animation: lineFold 750ms ease forwards;
+}
+
+.words {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.2rem;
+  justify-items: center;
+  text-align: center;
+}
+
+.words strong {
+  display: block;
+  font-family: var(--font-display), serif;
+  font-size: clamp(3rem, 8vw, 6.4rem);
+  text-transform: uppercase;
+  line-height: 0.88;
+  letter-spacing: -0.05em;
+}
+
+.words p,
+.kicker {
+  margin: 0;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+}
+
+@keyframes lineFold {
+  0% {
+    transform: scaleY(1);
+  }
+
+  100% {
+    transform: scaleY(0);
+  }
+}

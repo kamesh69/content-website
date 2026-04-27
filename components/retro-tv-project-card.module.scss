@@ -1,0 +1,196 @@
+.card {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 2rem;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, rgba(19, 19, 19, 0.86), rgba(9, 9, 9, 0.78));
+  transition: transform 200ms ease, border-color 200ms ease, background 200ms ease;
+}
+
+.active {
+  transform: translateY(-0.2rem);
+  border-color: rgba(241, 180, 139, 0.42);
+  background: linear-gradient(180deg, rgba(23, 23, 23, 0.94), rgba(11, 11, 11, 0.85));
+}
+
+.copy {
+  display: grid;
+  gap: 1rem;
+  align-content: center;
+}
+
+.year {
+  margin: 0;
+  color: var(--brand-soft);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+}
+
+.copy h3 {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.2rem, 4vw, 4rem);
+  line-height: 0.9;
+}
+
+.summary {
+  margin: 0;
+  max-width: 34rem;
+  color: var(--muted);
+  line-height: 1.7;
+}
+
+.services {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.services span,
+.actions a,
+.actions button {
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--line);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.actions button,
+.actions a {
+  background: transparent;
+  color: inherit;
+}
+
+.actions button:hover,
+.actions a:hover,
+.actions button:focus-visible,
+.actions a:focus-visible {
+  border-color: rgba(241, 180, 139, 0.48);
+  color: var(--brand-soft);
+}
+
+.tvShell {
+  display: grid;
+  place-items: center;
+}
+
+.tvFrame {
+  position: relative;
+  width: min(100%, 24rem);
+  aspect-ratio: 1 / 1.05;
+  padding: 1.6rem 1.2rem 2rem;
+  border-radius: 1.4rem;
+  background:
+    radial-gradient(circle at top, rgba(255, 255, 255, 0.14), transparent 28%),
+    linear-gradient(180deg, #52463f, #201b17);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.22),
+    0 25px 40px rgba(0, 0, 0, 0.4);
+}
+
+.glow {
+  position: absolute;
+  inset: 1rem;
+  border-radius: 1rem;
+  box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.05);
+}
+
+.screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 1rem;
+  aspect-ratio: 1.18 / 1;
+  border: 0.35rem solid #141414;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(0, 0, 0, 0.18)),
+    #050505;
+}
+
+.screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.09), transparent 28%),
+    repeating-linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.02),
+      rgba(255, 255, 255, 0.02) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+  pointer-events: none;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.9) contrast(1.05);
+}
+
+.controls {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
+.controls span {
+  width: 0.85rem;
+  height: 0.85rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  padding: 4.5rem 1rem 1rem;
+  background: rgba(4, 4, 4, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+.close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 0.72rem;
+}
+
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  height: calc(100vh - 6rem);
+  overflow-y: auto;
+}
+
+.gallery img {
+  width: 100%;
+  min-height: 18rem;
+  object-fit: cover;
+}
+
+@media (max-width: 920px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+}

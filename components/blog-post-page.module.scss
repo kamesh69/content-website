@@ -1,0 +1,47 @@
+.page {
+  padding: 7rem 0 6rem;
+}
+
+.inner {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.header {
+  max-width: 48rem;
+}
+
+.header h1 {
+  margin: 0.8rem 0 1rem;
+  font-family: var(--font-display), serif;
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  line-height: 0.9;
+}
+
+.header p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.cover {
+  width: 100%;
+  max-height: 34rem;
+  object-fit: cover;
+  border: 1px solid var(--line);
+}
+
+.content {
+  max-width: 48rem;
+  color: var(--muted);
+  line-height: 1.85;
+}
+
+.content p {
+  margin: 0 0 1rem;
+}
+
+.content code {
+  padding: 0.1rem 0.35rem;
+  background: rgba(255, 255, 255, 0.08);
+}

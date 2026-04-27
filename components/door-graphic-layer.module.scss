@@ -1,0 +1,40 @@
+.layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.door {
+  position: absolute;
+  width: min(10vw, 5.75rem);
+  min-width: 3.5rem;
+  transform: translate(-50%, -50%) rotate(-2deg);
+  opacity: 0.24;
+}
+
+.frame,
+.panel {
+  position: absolute;
+  inset: 0;
+}
+
+.frame {
+  border: 2px solid rgba(198, 132, 95, 0.75);
+}
+
+.panel {
+  inset: 0.35rem;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(198, 132, 95, 0.9), rgba(92, 55, 36, 0.8));
+}
+
+.knob {
+  position: absolute;
+  top: 50%;
+  right: 0.75rem;
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 50%;
+  background: rgba(255, 235, 210, 0.9);
+}

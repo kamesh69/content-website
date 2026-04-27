@@ -1,0 +1,157 @@
+.section {
+  position: relative;
+  padding: 6rem 0 4rem;
+  background: #0b0b0b;
+}
+
+.inner {
+  display: grid;
+  grid-template-columns: minmax(260px, 25vw) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 5rem;
+  display: grid;
+  gap: 1.2rem;
+}
+
+.sidebar h2 {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(3rem, 5.2vw, 5rem);
+  line-height: 0.92;
+}
+
+.progressRail {
+  position: relative;
+  width: 2px;
+  height: 14rem;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.progressFill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, var(--brand-soft), var(--brand));
+  transition: height 260ms ease;
+}
+
+.activeMeta {
+  display: grid;
+  gap: 0.55rem;
+  max-width: 18rem;
+}
+
+.activeNumber {
+  margin: 0;
+  color: var(--brand-soft);
+  font-size: 0.76rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.activeMeta h3 {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(2rem, 3.2vw, 3rem);
+  line-height: 0.92;
+  text-transform: uppercase;
+}
+
+.activeMeta p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.steps {
+  display: grid;
+  gap: 1.1rem;
+}
+
+.card {
+  display: grid;
+  grid-template-columns: minmax(220px, 26vw) minmax(0, 1fr);
+  min-height: 20rem;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid transparent;
+  background: rgba(255, 255, 255, 0.01);
+  opacity: 0.72;
+  transition: opacity 220ms ease, transform 220ms ease, border-color 220ms ease;
+}
+
+.active {
+  opacity: 1;
+  transform: translateX(0.35rem);
+  border-bottom-color: var(--line);
+}
+
+.imageWrap {
+  position: relative;
+  min-height: 20rem;
+  overflow: hidden;
+}
+
+.imageWrap img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(9, 9, 9, 0.05), rgba(9, 9, 9, 0.68));
+}
+
+.content {
+  display: grid;
+  align-content: center;
+  gap: 0.7rem;
+  padding: 1.4rem;
+}
+
+.number {
+  margin: 0;
+  color: var(--brand-soft);
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.content h3 {
+  margin: 0;
+  font-family: var(--font-display), serif;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  line-height: 0.9;
+  text-transform: uppercase;
+}
+
+.content p:last-child {
+  margin: 0;
+  max-width: 32rem;
+  color: rgba(248, 244, 235, 0.86);
+  line-height: 1.8;
+}
+
+@media (max-width: 980px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: relative;
+    top: auto;
+  }
+
+  .card {
+    grid-template-columns: 1fr;
+  }
+}

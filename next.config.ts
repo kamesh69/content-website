@@ -5,6 +5,9 @@ const nextConfig: NextConfig = {
     ignoreDuringBuilds: true,
   },
   images: {
+    // Vercel Image Optimization returns 402 on this project.
+    // Serve /public images directly so the portfolio renders without it.
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",

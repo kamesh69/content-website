@@ -12,8 +12,13 @@ import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import { StartHere } from "@/components/start-here";
 import { TestimonialSection } from "@/components/testimonial-section";
+import { getLatestArticles } from "@/lib/wordpress";
 
-export default function HomePage() {
+export const revalidate = 60;
+
+export default async function HomePage() {
+  const latestArticles = await getLatestArticles(5);
+
   return (
     <>
       <SiteHeader />
@@ -23,7 +28,7 @@ export default function HomePage() {
         <ServicesSection />
         <SelectedWork />
         <BehindTheWords />
-        <LatestWriting />
+        <LatestWriting articles={latestArticles} />
         <StartHere />
         <AboutSection />
         <ProcessSection />

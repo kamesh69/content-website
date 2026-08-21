@@ -1,12 +1,16 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
-import { articles } from "@/lib/content/articles";
+import type { Article } from "@/lib/types";
 import { writingIntro } from "@/lib/content/site";
 
 import styles from "./latest-writing.module.scss";
 
-export function LatestWriting() {
+type LatestWritingProps = {
+  articles: Article[];
+};
+
+export function LatestWriting({ articles }: LatestWritingProps) {
   return (
     <section className={styles.section} id="writing" aria-labelledby="writing-heading">
       <div className={`section-shell ${styles.inner}`}>

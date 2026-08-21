@@ -1,6 +1,8 @@
 import { BlogIndex } from "@/components/blog-index";
 import { getAllPosts } from "@/lib/wordpress";
 
+export const revalidate = 60;
+
 export const metadata = {
   title: "Writing",
   description: "Essays, process notes, and practical thoughts on scripts, copy, and editing.",

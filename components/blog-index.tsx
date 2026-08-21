@@ -16,8 +16,8 @@ export function BlogIndex({ posts }: BlogIndexProps) {
           <p className="eyebrow">From the desk</p>
           <h1>Writing & notes.</h1>
           <p>
-            Essays, process notes, and practical thoughts on scripts, copy, and editing—kept separate
-            from the portfolio homepage and ready for WordPress when connected.
+            Essays, process notes, and practical thoughts on scripts, copy, and editing—pulled from
+            WordPress posts in the <code>rati-writing</code> category.
           </p>
         </header>
         <div className={styles.grid}>

@@ -1,31 +1,36 @@
 import { GraphQLClient, gql } from "graphql-request";
 
-import type { BlogPost } from "@/lib/types";
+import type { Article, BlogPost } from "@/lib/types";
+import { articles as fallbackArticles } from "@/lib/content/articles";
+
+/** Only posts in this WP category appear on the Rati portfolio. */
+export const RATI_CATEGORY_SLUG = "rati-writing";
 
 const fallbackPosts: BlogPost[] = [
   {
     id: "fallback-1",
-    slug: "launching-a-motion-led-studio-site",
-    title: "Launching a motion-led studio site on one VPS",
+    slug: "why-story-is-the-only-advantage-ai-cant-copy",
+    title: "Why Story Is the Only Advantage AI Can’t Copy",
     excerpt:
-      "A placeholder post showing how the blog UI behaves before the real WordPress connection is added.",
+      "A placeholder note shown before WordPress posts in the rati-writing category are connected.",
     content:
-      "<p>This placeholder exists so the blog section works before WordPress is configured. Replace it by connecting <code>WORDPRESS_GRAPHQL_URL</code> to your live WPGraphQL endpoint.</p><p>The homepage stays fully custom, while the blog uses WordPress only for repeatable editorial content.</p>",
+      "<p>Publish a WordPress <strong>Post</strong> (not a sports Article) in the <code>rati-writing</code> category on <code>cms.thesportsrivalry.com</code> to replace this fallback.</p>",
     publishedAt: "2026-04-24T10:00:00.000Z",
+    coverImage: "/images/writing/story.jpg",
     author: "Rati Agrawal",
-    categories: ["Setup", "Infrastructure"],
+    categories: ["Craft"],
   },
   {
     id: "fallback-2",
-    slug: "art-direction-without-a-page-builder",
-    title: "Art direction without a page builder",
-    excerpt:
-      "Why this starter keeps the homepage in code and gives WordPress the blog instead.",
+    slug: "how-i-outline-scripts-that-dont-bore-me",
+    title: "How I Outline Scripts That Don’t Bore Me",
+    excerpt: "Fallback content used when the GraphQL endpoint is unreachable.",
     content:
-      "<p>Some pages are content management problems. Others are motion-design problems. This homepage is the second kind.</p>",
+      "<p>See <code>docs/wordpress-shared-cms.md</code> for the shared-CMS setup steps.</p>",
     publishedAt: "2026-04-22T10:00:00.000Z",
+    coverImage: "/images/writing/outline.jpg",
     author: "Rati Agrawal",
-    categories: ["Design", "CMS"],
+    categories: ["Process"],
   },
 ];
 
@@ -42,18 +47,22 @@ type WpPostNode = {
     };
   };
   categories?: {
-    nodes?: Array<{ name?: string | null }>;
+    nodes?: Array<{ name?: string | null; slug?: string | null }>;
   };
   featuredImage?: {
     node?: {
       sourceUrl?: string | null;
+      altText?: string | null;
     };
   };
 };
 
 const allPostsQuery = gql`
-  query GetAllPosts {
-    posts(first: 20, where: { status: PUBLISH }) {
+  query GetRatiPosts($category: String!, $first: Int!) {
+    posts(
+      first: $first
+      where: { status: PUBLISH, categoryName: $category, orderby: { field: DATE, order: DESC } }
+    ) {
       nodes {
         id
         slug
@@ -69,11 +78,13 @@ const allPostsQuery = gql`
         categories {
           nodes {
             name
+            slug
           }
         }
         featuredImage {
           node {
             sourceUrl
+            altText
           }
         }
       }
@@ -82,7 +93,7 @@ const allPostsQuery = gql`
 `;
 
 const postBySlugQuery = gql`
-  query GetPostBySlug($slug: ID!) {
+  query GetRatiPostBySlug($slug: ID!) {
     post(id: $slug, idType: SLUG) {
       id
       slug
@@ -98,11 +109,13 @@ const postBySlugQuery = gql`
       categories {
         nodes {
           name
+          slug
         }
       }
       featuredImage {
         node {
           sourceUrl
+          altText
         }
       }
     }
@@ -123,6 +136,12 @@ function getClient() {
   });
 }
 
+function hasRatiCategory(post: WpPostNode) {
+  return (
+    post.categories?.nodes?.some((category) => category.slug === RATI_CATEGORY_SLUG) ?? false
+  );
+}
+
 export function mapWpPostToUiPost(post: WpPostNode): BlogPost {
   return {
     id: post.id,
@@ -132,11 +151,22 @@ export function mapWpPostToUiPost(post: WpPostNode): BlogPost {
     content: post.content,
     publishedAt: post.date,
     coverImage: post.featuredImage?.node?.sourceUrl ?? undefined,
-    author: post.author?.node?.name ?? "Studio Replica",
+    author: post.author?.node?.name ?? "Rati Agrawal",
     categories:
       post.categories?.nodes
         ?.map((category) => category.name)
         .filter((category): category is string => Boolean(category)) ?? [],
+  };
+}
+
+export function mapBlogPostToArticle(post: BlogPost): Article {
+  return {
+    id: post.id,
+    title: post.title,
+    category: post.categories[0] ?? "Writing",
+    image: post.coverImage ?? "/images/writing/story.jpg",
+    href: `/blog/${post.slug}`,
+    excerpt: post.excerpt,
   };
 }
 
@@ -152,7 +182,10 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   }
 
   try {
-    const data = await client.request<{ posts: { nodes: WpPostNode[] } }>(allPostsQuery);
+    const data = await client.request<{ posts: { nodes: WpPostNode[] } }>(allPostsQuery, {
+      category: RATI_CATEGORY_SLUG,
+      first: 50,
+    });
 
     const posts = data.posts.nodes.map(mapWpPostToUiPost);
 
@@ -160,6 +193,37 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   } catch (error) {
     console.error("Failed to fetch WordPress posts", error);
     return fallbackPosts;
+  }
+}
+
+export async function getLatestPosts(limit = 5): Promise<BlogPost[]> {
+  const posts = await getAllPosts();
+  return posts.slice(0, limit);
+}
+
+export async function getLatestArticles(limit = 5): Promise<Article[]> {
+  const client = getClient();
+
+  if (!client) {
+    return fallbackArticles.slice(0, limit);
+  }
+
+  try {
+    const data = await client.request<{ posts: { nodes: WpPostNode[] } }>(allPostsQuery, {
+      category: RATI_CATEGORY_SLUG,
+      first: limit,
+    });
+
+    const posts = data.posts.nodes.map(mapWpPostToUiPost);
+
+    if (posts.length === 0) {
+      return fallbackArticles.slice(0, limit);
+    }
+
+    return posts.map(mapBlogPostToArticle);
+  } catch (error) {
+    console.error("Failed to fetch latest WordPress articles", error);
+    return fallbackArticles.slice(0, limit);
   }
 }
 
@@ -173,8 +237,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const data = await client.request<{ post: WpPostNode | null }>(postBySlugQuery, { slug });
 
-    if (!data.post) {
-      return null;
+    if (!data.post || !hasRatiCategory(data.post)) {
+      return fallbackPosts.find((post) => post.slug === slug) ?? null;
     }
 
     return mapWpPostToUiPost(data.post);

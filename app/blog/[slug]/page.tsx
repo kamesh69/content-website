@@ -3,6 +3,8 @@ import { notFound } from "next/navigation";
 import { BlogPostPage } from "@/components/blog-post-page";
 import { getAllPosts, getPostBySlug } from "@/lib/wordpress";
 
+export const revalidate = 60;
+
 type BlogPostRouteProps = {
   params: Promise<{ slug: string }>;
 };

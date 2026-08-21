@@ -35,8 +35,7 @@ export const hero = {
     { label: "Copywriting", href: "#services" },
     { label: "Editing", href: "#services" },
   ],
-  image:
-    "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1200&q=80",
+  image: "/images/hero/desk.jpg",
   imageAlt: "Rati Agrawal writing at a desk with a laptop and notebooks",
 };
 
@@ -70,8 +69,7 @@ export const behindTheWords = {
     { number: "03", title: "Story" },
   ],
   cta: { label: "See the project", href: "#work" },
-  image:
-    "https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1400&q=80",
+  image: "/images/workspace/notes.jpg",
   imageAlt: "Notebook, handwritten notes, coffee, and writing materials on a desk",
 };
 
@@ -93,8 +91,7 @@ export const about = {
   lead: "Some people enjoy spreadsheets. I have an unreasonable attachment to sentences.",
   body: "I’m a full-time writer and editor. Most of my working hours go to researching ideas, finding the story inside them, and working out the clearest and most interesting way to put that story into words—whether that’s a script, a landing page, or a draft that needs a sharper second pass.",
   cta: { label: "More about me", href: "#process" },
-  image:
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1000&q=80",
+  image: "/images/about/portrait.jpg",
   imageAlt: "Portrait of Rati Agrawal",
 };
 

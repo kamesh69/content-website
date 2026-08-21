@@ -5,40 +5,35 @@ export const articles: Article[] = [
     id: "story-advantage",
     title: "Why Story Is the Only Advantage AI Can’t Copy",
     category: "Craft",
-    image:
-      "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&w=900&q=80",
+    image: "/images/writing/story.jpg",
     href: "/blog",
   },
   {
     id: "outline-scripts",
     title: "How I Outline Scripts That Don’t Bore Me",
     category: "Process",
-    image:
-      "https://images.unsplash.com/photo-1516414447565-b14be0adf13e?auto=format&fit=crop&w=900&q=80",
+    image: "/images/writing/outline.jpg",
     href: "/blog",
   },
   {
     id: "one-edit",
     title: "The One Edit That Makes Everything Clearer",
     category: "Editing",
-    image:
-      "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=900&q=80",
+    image: "/images/writing/edit.jpg",
     href: "/blog",
   },
   {
     id: "work-with-clients",
     title: "How I Work With Clients (And Stay Sane)",
     category: "Business",
-    image:
-      "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=900&q=80",
+    image: "/images/writing/clients.jpg",
     href: "/blog",
   },
   {
     id: "thinking-about",
     title: "Things I’m Thinking About Right Now",
     category: "Notes",
-    image:
-      "https://images.unsplash.com/photo-1499750310107-5fef28a66643?auto=format&fit=crop&w=900&q=80",
+    image: "/images/writing/thinking.jpg",
     href: "/blog",
   },
 ];

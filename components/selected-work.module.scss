@@ -1,0 +1,154 @@
+.section {
+  padding: var(--section-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.intro {
+  max-width: 34rem;
+  margin-bottom: clamp(2.25rem, 4vw, 3.25rem);
+}
+
+.intro h2 {
+  margin: 0.85rem 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(2.2rem, 4.5vw, 3.35rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.featured {
+  border: 1px solid var(--border);
+  margin-bottom: 1.25rem;
+}
+
+.featuredLink {
+  display: grid;
+}
+
+.featuredMedia {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #1a1714;
+}
+
+.featuredCopy {
+  padding: 1.5rem 1.35rem 1.65rem;
+}
+
+.category {
+  margin: 0 0 0.55rem;
+  color: var(--accent);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.featuredCopy h3,
+.cardCopy h3 {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.55rem, 3vw, 2.2rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+
+.type {
+  margin: 0.45rem 0 0;
+  color: var(--text-soft);
+  font-size: 0.9rem;
+}
+
+.description {
+  margin: 0.9rem 0 0;
+  max-width: 28rem;
+  color: var(--text-muted);
+  line-height: 1.65;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 1.1rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.25s var(--ease);
+}
+
+.featuredLink:hover .cta,
+.cardLink:hover .cta {
+  color: var(--accent);
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 0.7s var(--ease);
+}
+
+.featuredLink:hover .image,
+.cardLink:hover .image {
+  transform: scale(1.035);
+}
+
+.grid {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.card {
+  border: 1px solid var(--border);
+}
+
+.cardLink {
+  display: grid;
+  height: 100%;
+}
+
+.cardMedia {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  background: #ddd5cb;
+}
+
+.cardCopy {
+  display: flex;
+  flex-direction: column;
+  padding: 1.15rem 1.1rem 1.25rem;
+}
+
+.cardCopy h3 {
+  font-size: 1.35rem;
+}
+
+@media (min-width: 760px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1100px) {
+  .featuredLink {
+    grid-template-columns: 1.35fr 0.85fr;
+    align-items: stretch;
+  }
+
+  .featuredMedia {
+    aspect-ratio: auto;
+    min-height: 100%;
+  }
+
+  .featuredCopy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2.25rem;
+  }
+
+  .grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

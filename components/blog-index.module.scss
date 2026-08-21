@@ -1,74 +1,89 @@
 .page {
-  padding: 7rem 0 6rem;
+  min-height: 100vh;
+  padding: 5rem 0 4rem;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .inner {
   display: grid;
-  gap: 2rem;
+  gap: 2.5rem;
 }
 
 .header {
-  max-width: 42rem;
+  max-width: 40rem;
 }
 
 .header h1 {
-  margin: 0.8rem 0 1rem;
-  font-family: var(--font-display), serif;
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  line-height: 0.9;
+  margin: 0.75rem 0 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  font-weight: 500;
+  line-height: 1.05;
 }
 
-.header p:last-child {
+.header p {
   margin: 0;
-  color: var(--muted);
-  line-height: 1.8;
+  color: var(--text-muted);
+  line-height: 1.7;
 }
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1rem;
+  gap: 1.25rem;
 }
 
 .card {
-  display: grid;
-  gap: 1rem;
-  padding: 1.25rem;
-  border: 1px solid var(--line);
-  background: rgba(255, 255, 255, 0.03);
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
 }
 
 .meta {
-  margin: 0;
-  color: var(--brand-soft);
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  margin: 0 0 0.75rem;
+  color: var(--accent);
   font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .card h2 {
-  margin: 0;
-  font-family: var(--font-display), serif;
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  line-height: 0.95;
+  margin: 0 0 0.75rem;
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  font-weight: 500;
+  line-height: 1.2;
 }
 
-.card p:last-of-type {
+.card h2 a {
+  transition: color 0.25s var(--ease);
+}
+
+.card h2 a:hover {
+  color: var(--accent);
+}
+
+.card p {
   margin: 0;
-  color: var(--muted);
-  line-height: 1.7;
+  color: var(--text-muted);
+  line-height: 1.65;
 }
 
 .tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .tags span {
-  padding: 0.45rem 0.7rem;
-  border: 1px solid var(--line);
-  text-transform: uppercase;
-  letter-spacing: 0.14em;
-  font-size: 0.68rem;
+  color: var(--text-soft);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+}
+
+@media (min-width: 800px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

@@ -6,7 +6,7 @@ export default function ImprintPage() {
   return (
     <main className="legal-page">
       <div className="legal-page__inner">
-        <p className="eyebrow">Studio Replica</p>
+        <p className="eyebrow">Rati Agrawal</p>
         <h1>Imprint</h1>
         <p>
           Replace this page with your legal entity details, registered address, and jurisdictional

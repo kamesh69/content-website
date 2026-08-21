@@ -11,20 +11,20 @@ type BlogPostPageProps = {
 export function BlogPostPage({ post }: BlogPostPageProps) {
   return (
     <main className={styles.page}>
-      <article className={`section-shell ${styles.inner}`}>
-        <Link href="/blog" className="text-link">
-          Back to blog
+      <article className={styles.inner}>
+        <p className={styles.meta}>
+          {post.author} ·{" "}
+          {new Date(post.publishedAt).toLocaleDateString("en-US", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
+        </p>
+        <h1 className={styles.title}>{post.title}</h1>
+        <div className={styles.content} dangerouslySetInnerHTML={{ __html: post.content }} />
+        <Link href="/blog" className={styles.back}>
+          ← Back to writing
         </Link>
-        <header className={styles.header}>
-          <p className="eyebrow">{post.author}</p>
-          <h1>{post.title}</h1>
-          <p>{post.excerpt}</p>
-        </header>
-        {post.coverImage ? <img src={post.coverImage} alt="" className={styles.cover} /> : null}
-        <div
-          className={styles.content}
-          dangerouslySetInnerHTML={{ __html: post.content }}
-        />
       </article>
     </main>
   );

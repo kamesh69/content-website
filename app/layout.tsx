@@ -1,21 +1,21 @@
 import type { Metadata } from "next";
 
+import { site } from "@/lib/content/site";
+
 import "./globals.scss";
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: {
-    default: "Studio Replica",
-    template: "%s | Studio Replica",
+    default: site.title,
+    template: `%s | ${site.name}`,
   },
-  description:
-    "A cinematic portfolio experience with editorial storytelling, motion-forward sections, and headless WordPress blog integration.",
+  description: site.description,
   openGraph: {
-    title: "Studio Replica",
-    description:
-      "A cinematic portfolio experience with editorial storytelling, motion-forward sections, and headless WordPress blog integration.",
+    title: site.title,
+    description: site.description,
     url: "/",
-    siteName: "Studio Replica",
+    siteName: site.name,
     type: "website",
   },
 };

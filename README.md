@@ -1,6 +1,6 @@
-# Portfolio Frontend
+# Rati Agrawal — Writer & Editor
 
-Custom animated Next.js portfolio frontend intended to run alongside a WordPress CMS on the same Hostinger VPS.
+Premium editorial portfolio built with Next.js. The homepage is a code-managed writer/editor experience; the `/blog` section remains wired for headless WordPress via WPGraphQL.
 
 ## Stack
 
@@ -8,10 +8,14 @@ Custom animated Next.js portfolio frontend intended to run alongside a WordPress
 - React 19
 - TypeScript
 - SCSS Modules
-- GSAP / ScrollTrigger
-- Pixi.js
-- Three.js / React Three Fiber
-- WordPress via WPGraphQL
+- WordPress via WPGraphQL (optional)
+
+## Development
+
+```bash
+npm install
+npm run dev
+```
 
 ## Environment
 
@@ -24,12 +28,16 @@ WORDPRESS_PREVIEW_SECRET=change-me
 NEWSLETTER_URL=https://newsletter.example.com
 ```
 
-## Development
+## Content
 
-```bash
-npm install
-npm run dev
-```
+Homepage copy and media live in `lib/content/`:
+
+- `site.ts` — brand, hero, about, newsletter, etc.
+- `services.ts`
+- `projects.ts`
+- `articles.ts`
+- `faq.ts`
+- `process.ts`
 
 ## Production on Hostinger VPS
 

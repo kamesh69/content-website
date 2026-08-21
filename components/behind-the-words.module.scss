@@ -1,0 +1,108 @@
+.section {
+  padding: var(--section-pad) 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.inner {
+  display: grid;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.media {
+  position: relative;
+  aspect-ratio: 5 / 4;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: #ddd5cb;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.copy h2 {
+  margin: 0.9rem 0 1.15rem;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-serif);
+  font-size: clamp(2.1rem, 4.2vw, 3.2rem);
+  font-weight: 500;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+}
+
+.body {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 2rem 0 1.75rem;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.stepNumber {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+}
+
+.stepTitle {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.connector {
+  display: none;
+}
+
+.cta {
+  display: inline-flex;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.25s var(--ease);
+}
+
+.cta:hover {
+  color: var(--accent);
+}
+
+@media (min-width: 960px) {
+  .inner {
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 3.5rem;
+  }
+
+  .steps {
+    position: relative;
+  }
+
+  .connector {
+    display: block;
+    position: absolute;
+    top: 0.55rem;
+    left: calc(100% + 0.15rem);
+    width: calc(100% - 1.5rem);
+    height: 1px;
+    background: var(--border-strong);
+  }
+}

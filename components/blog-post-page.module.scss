@@ -1,47 +1,51 @@
 .page {
-  padding: 7rem 0 6rem;
+  min-height: 100vh;
+  padding: 5rem 0 4rem;
+  background: var(--bg);
+  color: var(--text);
 }
 
 .inner {
-  display: grid;
-  gap: 1.5rem;
+  width: min(calc(100% - 2.5rem), 760px);
+  margin: 0 auto;
 }
 
-.header {
-  max-width: 48rem;
+.meta {
+  margin: 0 0 1rem;
+  color: var(--accent);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
-.header h1 {
-  margin: 0.8rem 0 1rem;
-  font-family: var(--font-display), serif;
-  font-size: clamp(3rem, 7vw, 5.5rem);
-  line-height: 0.9;
-}
-
-.header p:last-child {
-  margin: 0;
-  color: var(--muted);
-  line-height: 1.8;
-}
-
-.cover {
-  width: 100%;
-  max-height: 34rem;
-  object-fit: cover;
-  border: 1px solid var(--line);
+.title {
+  margin: 0 0 1.5rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  font-weight: 500;
+  line-height: 1.05;
 }
 
 .content {
-  max-width: 48rem;
-  color: var(--muted);
-  line-height: 1.85;
+  color: var(--text-muted);
+  line-height: 1.8;
 }
 
-.content p {
-  margin: 0 0 1rem;
+.content :global(p) {
+  margin: 0 0 1.15rem;
 }
 
-.content code {
-  padding: 0.1rem 0.35rem;
-  background: rgba(255, 255, 255, 0.08);
+.back {
+  display: inline-flex;
+  margin-top: 2rem;
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 0.25s var(--ease);
+}
+
+.back:hover {
+  color: var(--accent);
 }

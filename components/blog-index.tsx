@@ -13,11 +13,11 @@ export function BlogIndex({ posts }: BlogIndexProps) {
     <main className={styles.page}>
       <div className={`section-shell ${styles.inner}`}>
         <header className={styles.header}>
-          <p className="eyebrow">Blog</p>
-          <h1>Headless WordPress journal.</h1>
+          <p className="eyebrow">From the desk</p>
+          <h1>Writing & notes.</h1>
           <p>
-            This section is wired for WPGraphQL, with a safe fallback so the frontend can still be
-            built and previewed before the CMS is configured.
+            Essays, process notes, and practical thoughts on scripts, copy, and editing—kept separate
+            from the portfolio homepage and ready for WordPress when connected.
           </p>
         </header>
         <div className={styles.grid}>

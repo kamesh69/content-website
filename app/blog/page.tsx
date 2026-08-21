@@ -2,8 +2,8 @@ import { BlogIndex } from "@/components/blog-index";
 import { getAllPosts } from "@/lib/wordpress";
 
 export const metadata = {
-  title: "Blog",
-  description: "Thoughts, process notes, and studio updates powered by headless WordPress.",
+  title: "Writing",
+  description: "Essays, process notes, and practical thoughts on scripts, copy, and editing.",
 };
 
 export default async function BlogPage() {

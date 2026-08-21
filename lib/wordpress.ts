@@ -12,7 +12,7 @@ const fallbackPosts: BlogPost[] = [
     content:
       "<p>This placeholder exists so the blog section works before WordPress is configured. Replace it by connecting <code>WORDPRESS_GRAPHQL_URL</code> to your live WPGraphQL endpoint.</p><p>The homepage stays fully custom, while the blog uses WordPress only for repeatable editorial content.</p>",
     publishedAt: "2026-04-24T10:00:00.000Z",
-    author: "Studio Replica",
+    author: "Rati Agrawal",
     categories: ["Setup", "Infrastructure"],
   },
   {
@@ -24,7 +24,7 @@ const fallbackPosts: BlogPost[] = [
     content:
       "<p>Some pages are content management problems. Others are motion-design problems. This homepage is the second kind.</p>",
     publishedAt: "2026-04-22T10:00:00.000Z",
-    author: "Studio Replica",
+    author: "Rati Agrawal",
     categories: ["Design", "CMS"],
   },
 ];

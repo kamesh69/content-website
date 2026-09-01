@@ -1,5 +1,9 @@
 export const metadata = {
   title: "Imprint",
+  description: "Legal imprint and contact information for Rati Agrawal.",
+  alternates: {
+    canonical: "/imprint",
+  },
 };
 
 export default function ImprintPage() {

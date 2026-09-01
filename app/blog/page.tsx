@@ -12,6 +12,9 @@ export const revalidate = 60;
 export const metadata = {
   title: "Writing",
   description: "Essays, process notes, and practical thoughts on scripts, copy, and editing.",
+  alternates: {
+    canonical: "/blog",
+  },
 };
 
 export default async function BlogPage() {

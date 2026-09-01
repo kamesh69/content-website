@@ -1,5 +1,9 @@
 export const metadata = {
   title: "Privacy",
+  description: "Privacy policy for Rati Agrawal's website.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

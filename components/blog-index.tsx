@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { getEditorialArticleBySlug } from "@/lib/content/article-details";
 import type { BlogPost } from "@/lib/types";
 
 import styles from "./blog-index.module.scss";
@@ -7,6 +8,18 @@ import styles from "./blog-index.module.scss";
 type BlogIndexProps = {
   posts: BlogPost[];
 };
+
+function formatPublishedAt(value: string) {
+  if (!value.includes("-") || Number.isNaN(Date.parse(value))) {
+    return value;
+  }
+
+  return new Date(value).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
 
 export function BlogIndex({ posts }: BlogIndexProps) {
   return (
@@ -21,26 +34,26 @@ export function BlogIndex({ posts }: BlogIndexProps) {
           </p>
         </header>
         <div className={styles.grid}>
-          {posts.map((post) => (
-            <article key={post.id} className={styles.card}>
-              <p className={styles.meta}>
-                {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                  month: "short",
-                  day: "numeric",
-                  year: "numeric",
-                })}
-              </p>
-              <h2>
-                <Link href={`/blog/${post.slug}`}>{post.title}</Link>
-              </h2>
-              <p>{post.excerpt}</p>
-              <div className={styles.tags}>
-                {post.categories.map((category) => (
-                  <span key={category}>{category}</span>
-                ))}
-              </div>
-            </article>
-          ))}
+          {posts.map((post) => {
+            const href = getEditorialArticleBySlug(post.slug)
+              ? `/articles/${post.slug}`
+              : `/blog/${post.slug}`;
+
+            return (
+              <article key={post.id} className={styles.card}>
+                <p className={styles.meta}>{formatPublishedAt(post.publishedAt)}</p>
+                <h2>
+                  <Link href={href}>{post.title.replace(/\s+/g, " ").trim()}</Link>
+                </h2>
+                <p>{post.excerpt}</p>
+                <div className={styles.tags}>
+                  {post.categories.map((category) => (
+                    <span key={category}>{category}</span>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </main>

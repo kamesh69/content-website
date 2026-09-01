@@ -1,0 +1,17 @@
+.quote {
+  margin: 0;
+  padding: clamp(2.5rem, 6vw, 3.75rem) 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.text {
+  margin: 0;
+  color: var(--text);
+  font-family: var(--font-serif);
+  font-size: clamp(1.85rem, 4.2vw, 2.85rem);
+  font-weight: 500;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  white-space: pre-line;
+}

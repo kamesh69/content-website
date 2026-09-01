@@ -17,6 +17,14 @@ export const navigation: NavItem[] = [
   { label: "Contact", href: "#contact" },
 ];
 
+export const editorialNavigation: NavItem[] = [
+  { label: "Work", href: "/#work" },
+  { label: "Articles", href: "/blog" },
+  { label: "About", href: "/#about" },
+  { label: "Contact", href: "#contact" },
+  { label: "Let’s Talk", href: "#contact" },
+];
+
 export const socialLinks: SocialLink[] = [
   { label: "Instagram", href: "https://instagram.com" },
   { label: "LinkedIn", href: "https://linkedin.com" },

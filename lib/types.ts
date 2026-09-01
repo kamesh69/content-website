@@ -68,3 +68,26 @@ export type BlogPost = {
   author: string;
   categories: string[];
 };
+
+export type ArticleSection = {
+  id: string;
+  heading: string;
+  paragraphs: string[];
+};
+
+export type ArticleDetail = {
+  slug: string;
+  category: string;
+  title: string;
+  author: string;
+  publishedAt: string;
+  readingTime: string;
+  heroImage: string;
+  heroImageAlt: string;
+  introduction: string;
+  quote?: string;
+  sections: ArticleSection[];
+  closing?: string;
+  seoDescription: string;
+  htmlContent?: string;
+};

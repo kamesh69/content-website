@@ -2,6 +2,7 @@ import { GraphQLClient, gql } from "graphql-request";
 
 import type { Article, BlogPost } from "@/lib/types";
 import { articles as fallbackArticles } from "@/lib/content/articles";
+import { getEditorialArticles } from "@/lib/content/article-details";
 
 /** Only posts in this WP category appear on the Rati portfolio. */
 export const RATI_CATEGORY_SLUG = "rati-writing";
@@ -170,6 +171,26 @@ export function mapBlogPostToArticle(post: BlogPost): Article {
   };
 }
 
+function featuredEditorialArticles(): Article[] {
+  return getEditorialArticles().map((article) => ({
+    id: article.slug,
+    title: article.title.replace(/\s+/g, " ").trim(),
+    category: "Writing",
+    image: article.heroImage,
+    href: `/articles/${article.slug}`,
+    excerpt: article.introduction,
+  }));
+}
+
+function withFeaturedEditorial(articles: Article[], limit: number) {
+  const featured = featuredEditorialArticles();
+  const featuredHrefs = new Set(featured.map((article) => article.href));
+  return [...featured, ...articles.filter((article) => !featuredHrefs.has(article.href))].slice(
+    0,
+    limit,
+  );
+}
+
 function sanitizeExcerpt(excerpt: string) {
   return excerpt.replace(/<[^>]*>/g, "").trim();
 }
@@ -205,7 +226,7 @@ export async function getLatestArticles(limit = 5): Promise<Article[]> {
   const client = getClient();
 
   if (!client) {
-    return fallbackArticles.slice(0, limit);
+    return withFeaturedEditorial(fallbackArticles, limit);
   }
 
   try {
@@ -217,13 +238,13 @@ export async function getLatestArticles(limit = 5): Promise<Article[]> {
     const posts = data.posts.nodes.map(mapWpPostToUiPost);
 
     if (posts.length === 0) {
-      return fallbackArticles.slice(0, limit);
+      return withFeaturedEditorial(fallbackArticles, limit);
     }
 
-    return posts.map(mapBlogPostToArticle);
+    return withFeaturedEditorial(posts.map(mapBlogPostToArticle), limit);
   } catch (error) {
     console.error("Failed to fetch latest WordPress articles", error);
-    return fallbackArticles.slice(0, limit);
+    return withFeaturedEditorial(fallbackArticles, limit);
   }
 }
 

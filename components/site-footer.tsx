@@ -4,7 +4,38 @@ import { navigation, site, socialLinks } from "@/lib/content/site";
 
 import styles from "./site-footer.module.scss";
 
-export function SiteFooter() {
+type SiteFooterProps = {
+  variant?: "default" | "editorial";
+};
+
+export function SiteFooter({ variant = "default" }: SiteFooterProps) {
+  const linkedIn = socialLinks.find((link) => link.label === "LinkedIn");
+  const year = new Date().getFullYear();
+
+  if (variant === "editorial") {
+    return (
+      <footer className={`${styles.footer} ${styles.editorial}`}>
+        <div className={`section-shell ${styles.editorialBar}`}>
+          <Link href="/" className={styles.editorialLink}>
+            {site.name}
+          </Link>
+          <a href={`mailto:${site.email}`} className={styles.editorialLink}>
+            {site.email}
+          </a>
+          {linkedIn ? (
+            <a href={linkedIn.href} className={styles.editorialLink} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+          ) : null}
+          <Link href="/#work" className={styles.editorialLink}>
+            Portfolio / Work
+          </Link>
+          <p className={styles.copyright}>© {year} {site.name}</p>
+        </div>
+      </footer>
+    );
+  }
+
   return (
     <footer className={styles.footer}>
       <div className={`section-shell ${styles.inner}`}>
@@ -31,7 +62,7 @@ export function SiteFooter() {
       </div>
       <div className={`section-shell ${styles.meta}`}>
         <p>
-          © {new Date().getFullYear()} {site.name}
+          © {year} {site.name}
         </p>
         <div className={styles.legal}>
           <Link href="/imprint">Imprint</Link>

@@ -64,6 +64,9 @@ if (!class_exists('Rati_Headless_CMS')) {
     }
 
     public static function register_post_types(): void {
+        if (post_type_exists('rati_service')) {
+            return;
+        }
         $common = [
             'public' => false,
             'show_ui' => true,
@@ -172,6 +175,10 @@ if (!class_exists('Rati_Headless_CMS')) {
     }
 
     public static function register_admin_menu(): void {
+        global $admin_page_hooks;
+        if (isset($admin_page_hooks['rati-site-content'])) {
+            return;
+        }
         add_menu_page(
             'Rati Site Content',
             'Rati Site',
@@ -754,6 +761,9 @@ if (!class_exists('Rati_Headless_CMS')) {
     }
 
     public static function register_rest_routes(): void {
+        if (function_exists('rest_get_server') && rest_get_server() && isset(rest_get_server()->get_routes()['/rati/v1/site-settings'])) {
+            return;
+        }
         register_rest_route('rati/v1', '/site-settings', [
             'methods' => 'GET',
             'callback' => static fn () => self::get_site_settings(),

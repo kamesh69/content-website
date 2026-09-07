@@ -1,10 +1,19 @@
 import { Reveal } from "@/components/reveal";
-import { services } from "@/lib/content/services";
-import { servicesIntro } from "@/lib/content/site";
+import { services as fallbackServices } from "@/lib/content/services";
+import { servicesIntro as fallbackServicesIntro } from "@/lib/content/site";
+import type { Service } from "@/lib/types";
 
 import styles from "./services-section.module.scss";
 
-export function ServicesSection() {
+type ServicesSectionProps = {
+  services?: Service[];
+  servicesIntro?: typeof fallbackServicesIntro;
+};
+
+export function ServicesSection({
+  services = fallbackServices,
+  servicesIntro = fallbackServicesIntro,
+}: ServicesSectionProps) {
   return (
     <section className={styles.section} id="services" aria-labelledby="services-heading">
       <div className={`section-shell ${styles.inner}`}>

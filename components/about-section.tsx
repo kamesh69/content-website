@@ -1,11 +1,15 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
-import { about } from "@/lib/content/site";
+import { about as fallbackAbout } from "@/lib/content/site";
 
 import styles from "./about-section.module.scss";
 
-export function AboutSection() {
+type AboutSectionProps = {
+  about?: typeof fallbackAbout;
+};
+
+export function AboutSection({ about = fallbackAbout }: AboutSectionProps) {
   return (
     <section className={styles.section} id="about" aria-labelledby="about-heading">
       <div className={`section-shell ${styles.inner}`}>

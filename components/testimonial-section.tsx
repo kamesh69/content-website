@@ -1,9 +1,13 @@
 import { Reveal } from "@/components/reveal";
-import { testimonial } from "@/lib/content/site";
+import { testimonial as fallbackTestimonial } from "@/lib/content/site";
 
 import styles from "./testimonial-section.module.scss";
 
-export function TestimonialSection() {
+type TestimonialSectionProps = {
+  testimonial?: typeof fallbackTestimonial;
+};
+
+export function TestimonialSection({ testimonial = fallbackTestimonial }: TestimonialSectionProps) {
   return (
     <section className={styles.section} aria-labelledby="testimonial-heading">
       <div className={`section-shell ${styles.inner}`}>

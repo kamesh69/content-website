@@ -1,12 +1,21 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
-import { projects } from "@/lib/content/projects";
-import { workIntro } from "@/lib/content/site";
+import { projects as fallbackProjects } from "@/lib/content/projects";
+import { workIntro as fallbackWorkIntro } from "@/lib/content/site";
+import type { Project } from "@/lib/types";
 
 import styles from "./selected-work.module.scss";
 
-export function SelectedWork() {
+type SelectedWorkProps = {
+  projects?: Project[];
+  workIntro?: typeof fallbackWorkIntro;
+};
+
+export function SelectedWork({
+  projects = fallbackProjects,
+  workIntro = fallbackWorkIntro,
+}: SelectedWorkProps) {
   const featured = projects.find((project) => project.featured) ?? projects[0];
   const supporting = projects.filter((project) => project.id !== featured.id);
 
@@ -34,7 +43,7 @@ export function SelectedWork() {
               <h3>{featured.title}</h3>
               <p className={styles.type}>{featured.type}</p>
               {featured.description ? <p className={styles.description}>{featured.description}</p> : null}
-              <span className={styles.cta}>View project →</span>
+              <span className={styles.cta}>View Article →</span>
             </div>
           </a>
         </Reveal>
@@ -56,7 +65,7 @@ export function SelectedWork() {
                   <p className={styles.category}>{project.category}</p>
                   <h3>{project.title}</h3>
                   <p className={styles.type}>{project.type}</p>
-                  <span className={styles.cta}>View project →</span>
+                  <span className={styles.cta}>View Article →</span>
                 </div>
               </a>
             </Reveal>

@@ -1,14 +1,27 @@
 import Link from "next/link";
 
-import { navigation, site, socialLinks } from "@/lib/content/site";
+import {
+  navigation as fallbackNavigation,
+  site as fallbackSite,
+  socialLinks as fallbackSocialLinks,
+} from "@/lib/content/site";
+import type { NavItem, SocialLink } from "@/lib/types";
 
 import styles from "./site-footer.module.scss";
 
 type SiteFooterProps = {
   variant?: "default" | "editorial";
+  site?: typeof fallbackSite;
+  navigation?: NavItem[];
+  socialLinks?: SocialLink[];
 };
 
-export function SiteFooter({ variant = "default" }: SiteFooterProps) {
+export function SiteFooter({
+  variant = "default",
+  site = fallbackSite,
+  navigation = fallbackNavigation,
+  socialLinks = fallbackSocialLinks,
+}: SiteFooterProps) {
   const linkedIn = socialLinks.find((link) => link.label === "LinkedIn");
   const year = new Date().getFullYear();
 

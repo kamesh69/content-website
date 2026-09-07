@@ -1,13 +1,12 @@
-import { notFound, redirect } from "next/navigation";
+import { draftMode } from "next/headers";
+import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 
 import { ArticlePage } from "@/components/article-page";
-import {
-  getEditorialArticleBySlug,
-  mapBlogPostToArticleDetail,
-} from "@/lib/content/article-details";
-import { site } from "@/lib/content/site";
-import { getAllPosts, getPostBySlug } from "@/lib/wordpress";
+import { SiteFooter } from "@/components/site-footer";
+import { SiteHeader } from "@/components/site-header";
+import { mapBlogPostToArticleDetail } from "@/lib/content/article-details";
+import { getAllPosts, getPostBySlug, getSiteSettings } from "@/lib/wordpress";
 
 export const revalidate = 60;
 
@@ -25,14 +24,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: BlogPostRouteProps): Promise<Metadata> {
   const { slug } = await params;
-
-  if (getEditorialArticleBySlug(slug)) {
-    return {
-      title: "Article",
-    };
-  }
-
-  const post = await getPostBySlug(slug);
+  const { isEnabled } = await draftMode();
+  const post = await getPostBySlug(slug, isEnabled);
+  const settings = await getSiteSettings();
 
   if (!post) {
     return {
@@ -49,7 +43,7 @@ export async function generateMetadata({ params }: BlogPostRouteProps): Promise<
       canonical: url,
     },
     openGraph: {
-      title: `${post.title} | ${site.name}`,
+      title: `${post.title} | ${settings.site.name}`,
       description: post.excerpt,
       url,
       type: "article",
@@ -67,16 +61,26 @@ export async function generateMetadata({ params }: BlogPostRouteProps): Promise<
 
 export default async function BlogPost({ params }: BlogPostRouteProps) {
   const { slug } = await params;
-
-  if (getEditorialArticleBySlug(slug)) {
-    redirect(`/articles/${slug}`);
-  }
-
-  const post = await getPostBySlug(slug);
+  const { isEnabled } = await draftMode();
+  const [post, settings] = await Promise.all([
+    getPostBySlug(slug, isEnabled),
+    getSiteSettings(),
+  ]);
 
   if (!post) {
     notFound();
   }
 
-  return <ArticlePage article={mapBlogPostToArticleDetail(post)} />;
+  return (
+    <>
+      <SiteHeader
+        variant="editorial"
+        contactHref="/#contact"
+        site={settings.site}
+        editorialNavigation={settings.editorialNavigation}
+      />
+      <ArticlePage article={mapBlogPostToArticleDetail(post)} />
+      <SiteFooter variant="editorial" site={settings.site} socialLinks={settings.socialLinks} />
+    </>
+  );
 }

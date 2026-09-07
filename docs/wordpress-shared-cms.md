@@ -1,5 +1,7 @@
 # WordPress setup for Rati Agrawal (shared CMS)
 
+> **Full headless setup:** see [wordpress-headless-cms.md](./wordpress-headless-cms.md) for plugin install, content migration, preview URLs, and all content types.
+
 Use the **existing** Hostinger WordPress at `https://cms.thesportsrivalry.com`.
 
 Do **not** create a second Hostinger site.

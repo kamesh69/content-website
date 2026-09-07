@@ -1,9 +1,15 @@
 import { Reveal } from "@/components/reveal";
-import { editorialStatement } from "@/lib/content/site";
+import { editorialStatement as fallbackEditorialStatement } from "@/lib/content/site";
 
 import styles from "./editorial-statement.module.scss";
 
-export function EditorialStatement() {
+type EditorialStatementProps = {
+  editorialStatement?: typeof fallbackEditorialStatement;
+};
+
+export function EditorialStatement({
+  editorialStatement = fallbackEditorialStatement,
+}: EditorialStatementProps) {
   return (
     <section className={styles.section} aria-label="Editorial statement">
       <div className={`section-shell ${styles.inner}`}>

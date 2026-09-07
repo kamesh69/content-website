@@ -1,10 +1,19 @@
 import { Reveal } from "@/components/reveal";
-import { startHereItems } from "@/lib/content/articles";
-import { startHere } from "@/lib/content/site";
+import { startHereItems as fallbackStartHereItems } from "@/lib/content/articles";
+import { startHere as fallbackStartHere } from "@/lib/content/site";
+import type { StartHereItem } from "@/lib/types";
 
 import styles from "./start-here.module.scss";
 
-export function StartHere() {
+type StartHereProps = {
+  startHere?: typeof fallbackStartHere;
+  startHereItems?: StartHereItem[];
+};
+
+export function StartHere({
+  startHere = fallbackStartHere,
+  startHereItems = fallbackStartHereItems,
+}: StartHereProps) {
   return (
     <section className={styles.section} aria-labelledby="start-heading">
       <div className={`section-shell ${styles.inner}`}>

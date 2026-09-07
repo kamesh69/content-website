@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint . --max-warnings=0"
+    "lint": "eslint . --max-warnings=0",
+    "migrate:wordpress": "node scripts/migrate-to-wordpress.mjs"
   },
   "dependencies": {
     "@react-three/fiber": "^9.0.0",

@@ -8,7 +8,7 @@ export const projects: Project[] = [
     type: "YouTube Documentary",
     description: "A 4-part documentary series about identity, migration, and starting over.",
     image: "/images/work/long-way-home.jpg",
-    href: "#work",
+    href: "/blog/long-way-home",
     featured: true,
   },
   {
@@ -17,7 +17,7 @@ export const projects: Project[] = [
     category: "Copy",
     type: "Website Copy",
     image: "/images/work/nomad.jpg",
-    href: "#work",
+    href: "/blog/nomad-goods",
   },
   {
     id: "focus-journal",
@@ -25,7 +25,7 @@ export const projects: Project[] = [
     category: "Copy",
     type: "Founder’s Letter",
     image: "/images/work/focus-journal.jpg",
-    href: "#work",
+    href: "/blog/focus-journal",
   },
   {
     id: "what-makes-us-human",
@@ -33,7 +33,7 @@ export const projects: Project[] = [
     category: "Script",
     type: "YouTube Script",
     image: "/images/work/human.jpg",
-    href: "#work",
+    href: "/blog/what-makes-us-human",
   },
   {
     id: "brand-campaign",
@@ -41,7 +41,7 @@ export const projects: Project[] = [
     category: "Copy",
     type: "Launch Copy",
     image: "/images/work/campaign.jpg",
-    href: "#work",
+    href: "/blog/brand-campaign",
   },
   {
     id: "ten-ideas",
@@ -49,7 +49,7 @@ export const projects: Project[] = [
     category: "Essay",
     type: "Long-Form Essay",
     image: "/images/work/essay.jpg",
-    href: "#work",
+    href: "/blog/ten-ideas",
   },
   {
     id: "nonfiction-manuscript",
@@ -57,6 +57,6 @@ export const projects: Project[] = [
     category: "Edit",
     type: "Developmental Edit",
     image: "/images/work/manuscript.jpg",
-    href: "#work",
+    href: "/blog/nonfiction-manuscript",
   },
 ];

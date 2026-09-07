@@ -36,11 +36,20 @@ export const metadata: Metadata = {
     siteName: site.name,
     type: "website",
     locale: "en_US",
+    images: site.ogImage
+      ? [
+          {
+            url: site.ogImage,
+            alt: site.title,
+          },
+        ]
+      : undefined,
   },
   twitter: {
     card: "summary_large_image",
     title: site.title,
     description: site.description,
+    images: site.ogImage ? [site.ogImage] : undefined,
   },
 };
 

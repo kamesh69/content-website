@@ -1,11 +1,15 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
-import { behindTheWords } from "@/lib/content/site";
+import { behindTheWords as fallbackBehindTheWords } from "@/lib/content/site";
 
 import styles from "./behind-the-words.module.scss";
 
-export function BehindTheWords() {
+type BehindTheWordsProps = {
+  behindTheWords?: typeof fallbackBehindTheWords;
+};
+
+export function BehindTheWords({ behindTheWords = fallbackBehindTheWords }: BehindTheWordsProps) {
   return (
     <section className={styles.section} aria-labelledby="behind-heading">
       <div className={`section-shell ${styles.inner}`}>

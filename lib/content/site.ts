@@ -7,6 +7,7 @@ export const site = {
   description:
     "Writer, editor, and storyteller creating scripts, copy, and content people want to keep reading.",
   email: "hello@ratiagrawal.com",
+  ogImage: "/images/hero/desk.jpg",
 };
 
 export const navigation: NavItem[] = [
@@ -70,13 +71,13 @@ export const workIntro = {
 export const behindTheWords = {
   label: "Behind the words",
   heading: ["From a messy idea to", "a story worth watching."],
-  body: "Every project starts with research and questions. Then comes structure, story, and the writing that holds it all together—from framing notes and interview transcripts to a clear narrative arc with purpose and pace.",
+  body: "Every article starts with research and questions. Then comes structure, story, and the writing that holds it all together—from framing notes and interview transcripts to a clear narrative arc with purpose and pace.",
   steps: [
     { number: "01", title: "Research" },
     { number: "02", title: "Structure" },
     { number: "03", title: "Story" },
   ],
-  cta: { label: "See the project", href: "#work" },
+  cta: { label: "View Articles", href: "#work" },
   image: "/images/workspace/notes.jpg",
   imageAlt: "Notebook, handwritten notes, coffee, and writing materials on a desk",
 };

@@ -1,10 +1,19 @@
 import { Reveal } from "@/components/reveal";
-import { processSteps } from "@/lib/content/process";
-import { processIntro } from "@/lib/content/site";
+import { processSteps as fallbackProcessSteps } from "@/lib/content/process";
+import { processIntro as fallbackProcessIntro } from "@/lib/content/site";
+import type { ProcessStep } from "@/lib/types";
 
 import styles from "./process-section.module.scss";
 
-export function ProcessSection() {
+type ProcessSectionProps = {
+  processSteps?: ProcessStep[];
+  processIntro?: typeof fallbackProcessIntro;
+};
+
+export function ProcessSection({
+  processSteps = fallbackProcessSteps,
+  processIntro = fallbackProcessIntro,
+}: ProcessSectionProps) {
   return (
     <section className={styles.section} id="process" aria-labelledby="process-heading">
       <div className={`section-shell ${styles.inner}`}>

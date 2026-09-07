@@ -1,6 +1,5 @@
 import type { MetadataRoute } from "next";
 
-import { getEditorialArticleSlugs } from "@/lib/content/article-details";
 import { getSiteUrl } from "@/lib/seo";
 import { getAllPosts } from "@/lib/wordpress";
 
@@ -35,23 +34,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const editorialSlugs = new Set(getEditorialArticleSlugs());
-  const editorialRoutes: MetadataRoute.Sitemap = [...editorialSlugs].map((slug) => ({
-    url: `${siteUrl}/articles/${slug}`,
-    lastModified: now,
+  const posts = await getAllPosts();
+  const blogRoutes: MetadataRoute.Sitemap = posts.map((post) => ({
+    url: `${siteUrl}/blog/${post.slug}`,
+    lastModified: post.publishedAt ? new Date(post.publishedAt) : now,
     changeFrequency: "monthly",
-    priority: 0.8,
+    priority: 0.7,
   }));
 
-  const posts = await getAllPosts();
-  const blogRoutes: MetadataRoute.Sitemap = posts
-    .filter((post) => !editorialSlugs.has(post.slug))
-    .map((post) => ({
-      url: `${siteUrl}/blog/${post.slug}`,
-      lastModified: post.publishedAt ? new Date(post.publishedAt) : now,
-      changeFrequency: "monthly",
-      priority: 0.7,
-    }));
-
-  return [...staticRoutes, ...editorialRoutes, ...blogRoutes];
+  return [...staticRoutes, ...blogRoutes];
 }

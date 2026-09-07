@@ -3,12 +3,21 @@
 import { useId, useState } from "react";
 
 import { Reveal } from "@/components/reveal";
-import { faqItems } from "@/lib/content/faq";
-import { faqIntro } from "@/lib/content/site";
+import { faqItems as fallbackFaqItems } from "@/lib/content/faq";
+import { faqIntro as fallbackFaqIntro } from "@/lib/content/site";
+import type { FaqItem } from "@/lib/types";
 
 import styles from "./faq-section.module.scss";
 
-export function FaqSection() {
+type FaqSectionProps = {
+  faqItems?: FaqItem[];
+  faqIntro?: typeof fallbackFaqIntro;
+};
+
+export function FaqSection({
+  faqItems = fallbackFaqItems,
+  faqIntro = fallbackFaqIntro,
+}: FaqSectionProps) {
   const [openId, setOpenId] = useState<string | null>(faqItems[0]?.id ?? null);
   const baseId = useId();
 

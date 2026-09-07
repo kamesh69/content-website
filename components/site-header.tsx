@@ -4,13 +4,21 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useId, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type ReactNode } from "react";
 
-import { editorialNavigation, navigation, site } from "@/lib/content/site";
+import {
+  editorialNavigation as fallbackEditorialNavigation,
+  navigation as fallbackNavigation,
+  site as fallbackSite,
+} from "@/lib/content/site";
+import type { NavItem } from "@/lib/types";
 
 import styles from "./site-header.module.scss";
 
 type SiteHeaderProps = {
   variant?: "default" | "editorial";
   contactHref?: string;
+  site?: typeof fallbackSite;
+  navigation?: NavItem[];
+  editorialNavigation?: NavItem[];
 };
 
 type NavAnchorProps = {
@@ -37,7 +45,13 @@ function NavAnchor({ href, className, onClick, children, ...rest }: NavAnchorPro
   );
 }
 
-export function SiteHeader({ variant = "default", contactHref }: SiteHeaderProps) {
+export function SiteHeader({
+  variant = "default",
+  contactHref,
+  site = fallbackSite,
+  navigation = fallbackNavigation,
+  editorialNavigation = fallbackEditorialNavigation,
+}: SiteHeaderProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const menuId = useId();
@@ -125,7 +139,7 @@ export function SiteHeader({ variant = "default", contactHref }: SiteHeaderProps
               key={`${item.label}-${item.href}`}
               href={item.href}
               className={`${styles.navLink} ${editorial && index === items.length - 1 ? styles.navCta : ""}`}
-              aria-current={item.href === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/articles")) ? "page" : undefined}
+              aria-current={item.href === "/blog" && pathname.startsWith("/blog") ? "page" : undefined}
             >
               {item.label}
             </NavAnchor>
@@ -168,7 +182,7 @@ export function SiteHeader({ variant = "default", contactHref }: SiteHeaderProps
               href={item.href}
               className={`${styles.mobileLink} ${editorial && index === items.length - 1 ? styles.mobileCtaLink : ""}`}
               onClick={closeAndNavigate}
-              aria-current={item.href === "/blog" && (pathname.startsWith("/blog") || pathname.startsWith("/articles")) ? "page" : undefined}
+              aria-current={item.href === "/blog" && pathname.startsWith("/blog") ? "page" : undefined}
             >
               {item.label}
             </NavAnchor>

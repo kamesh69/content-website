@@ -1,11 +1,23 @@
-import { GraphQLClient, gql } from "graphql-request";
+import { gql } from "graphql-request";
 
 import type { Article, BlogPost } from "@/lib/types";
 import { articles as fallbackArticles } from "@/lib/content/articles";
-import { getEditorialArticles } from "@/lib/content/article-details";
+import {
+  articleDetailToBlogPost,
+  getEditorialArticleBySlug,
+  getEditorialArticles,
+  mapBlogPostToArticleDetail,
+} from "@/lib/content/article-details";
+
+import {
+  getWordpressClient,
+  parseJsonField,
+  RATI_CATEGORY_SLUG,
+  sanitizeExcerpt,
+} from "./client";
 
 /** Only posts in this WP category appear on the Rati portfolio. */
-export const RATI_CATEGORY_SLUG = "rati-writing";
+export { RATI_CATEGORY_SLUG };
 
 const fallbackPosts: BlogPost[] = [
   {
@@ -27,7 +39,7 @@ const fallbackPosts: BlogPost[] = [
     title: "How I Outline Scripts That Don’t Bore Me",
     excerpt: "Fallback content used when the GraphQL endpoint is unreachable.",
     content:
-      "<p>See <code>docs/wordpress-shared-cms.md</code> for the shared-CMS setup steps.</p>",
+      "<p>See <code>docs/wordpress-headless-cms.md</code> for the shared-CMS setup steps.</p>",
     publishedAt: "2026-04-22T10:00:00.000Z",
     coverImage: "/images/writing/outline.jpg",
     author: "Rati Agrawal",
@@ -42,6 +54,7 @@ type WpPostNode = {
   excerpt: string;
   content: string;
   date: string;
+  status?: string;
   author?: {
     node?: {
       name?: string;
@@ -56,6 +69,11 @@ type WpPostNode = {
       altText?: string | null;
     };
   };
+  ratiQuote?: string | null;
+  ratiClosing?: string | null;
+  ratiReadingTime?: string | null;
+  ratiSections?: string | null;
+  ratiHeroImageAlt?: string | null;
 };
 
 const allPostsQuery = gql`
@@ -71,6 +89,7 @@ const allPostsQuery = gql`
         excerpt
         content
         date
+        status
         author {
           node {
             name
@@ -88,20 +107,26 @@ const allPostsQuery = gql`
             altText
           }
         }
+        ratiQuote
+        ratiClosing
+        ratiReadingTime
+        ratiSections
+        ratiHeroImageAlt
       }
     }
   }
 `;
 
 const postBySlugQuery = gql`
-  query GetRatiPostBySlug($slug: ID!) {
-    post(id: $slug, idType: SLUG) {
+  query GetRatiPostBySlug($slug: ID!, $asPreview: Boolean = false) {
+    post(id: $slug, idType: SLUG, asPreview: $asPreview) {
       id
       slug
       title
       excerpt
       content
       date
+      status
       author {
         node {
           name
@@ -119,23 +144,14 @@ const postBySlugQuery = gql`
           altText
         }
       }
+      ratiQuote
+      ratiClosing
+      ratiReadingTime
+      ratiSections
+      ratiHeroImageAlt
     }
   }
 `;
-
-function getClient() {
-  const endpoint = process.env.WORDPRESS_GRAPHQL_URL;
-
-  if (!endpoint) {
-    return null;
-  }
-
-  return new GraphQLClient(endpoint, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-}
 
 function hasRatiCategory(post: WpPostNode) {
   return (
@@ -157,6 +173,11 @@ export function mapWpPostToUiPost(post: WpPostNode): BlogPost {
       post.categories?.nodes
         ?.map((category) => category.name)
         .filter((category): category is string => Boolean(category)) ?? [],
+    quote: post.ratiQuote ?? undefined,
+    closing: post.ratiClosing ?? undefined,
+    readingTime: post.ratiReadingTime ?? undefined,
+    sections: parseJsonField(post.ratiSections, []),
+    heroImageAlt: post.ratiHeroImageAlt ?? undefined,
   };
 }
 
@@ -177,7 +198,7 @@ function featuredEditorialArticles(): Article[] {
     title: article.title.replace(/\s+/g, " ").trim(),
     category: "Writing",
     image: article.heroImage,
-    href: `/articles/${article.slug}`,
+    href: `/blog/${article.slug}`,
     excerpt: article.introduction,
   }));
 }
@@ -191,12 +212,8 @@ function withFeaturedEditorial(articles: Article[], limit: number) {
   );
 }
 
-function sanitizeExcerpt(excerpt: string) {
-  return excerpt.replace(/<[^>]*>/g, "").trim();
-}
-
-export async function getAllPosts(): Promise<BlogPost[]> {
-  const client = getClient();
+export async function getAllPosts(preview = false): Promise<BlogPost[]> {
+  const client = getWordpressClient(preview);
 
   if (!client) {
     return fallbackPosts;
@@ -208,7 +225,7 @@ export async function getAllPosts(): Promise<BlogPost[]> {
       first: 50,
     });
 
-    const posts = data.posts.nodes.map(mapWpPostToUiPost);
+    const posts = data.posts.nodes.filter(hasRatiCategory).map(mapWpPostToUiPost);
 
     return posts.length > 0 ? posts : fallbackPosts;
   } catch (error) {
@@ -217,13 +234,13 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   }
 }
 
-export async function getLatestPosts(limit = 5): Promise<BlogPost[]> {
-  const posts = await getAllPosts();
+export async function getLatestPosts(limit = 5, preview = false): Promise<BlogPost[]> {
+  const posts = await getAllPosts(preview);
   return posts.slice(0, limit);
 }
 
-export async function getLatestArticles(limit = 5): Promise<Article[]> {
-  const client = getClient();
+export async function getLatestArticles(limit = 5, preview = false): Promise<Article[]> {
+  const client = getWordpressClient(preview);
 
   if (!client) {
     return withFeaturedEditorial(fallbackArticles, limit);
@@ -235,7 +252,7 @@ export async function getLatestArticles(limit = 5): Promise<Article[]> {
       first: limit,
     });
 
-    const posts = data.posts.nodes.map(mapWpPostToUiPost);
+    const posts = data.posts.nodes.filter(hasRatiCategory).map(mapWpPostToUiPost);
 
     if (posts.length === 0) {
       return withFeaturedEditorial(fallbackArticles, limit);
@@ -248,23 +265,38 @@ export async function getLatestArticles(limit = 5): Promise<Article[]> {
   }
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  const client = getClient();
+function getFallbackPost(slug: string): BlogPost | null {
+  const foundPost = fallbackPosts.find((post) => post.slug === slug);
+  if (foundPost) return foundPost;
+
+  const foundArticle = getEditorialArticleBySlug(slug);
+  if (foundArticle) return articleDetailToBlogPost(foundArticle);
+
+  return null;
+}
+
+export async function getPostBySlug(slug: string, preview = false): Promise<BlogPost | null> {
+  const client = getWordpressClient(preview);
 
   if (!client) {
-    return fallbackPosts.find((post) => post.slug === slug) ?? null;
+    return getFallbackPost(slug);
   }
 
   try {
-    const data = await client.request<{ post: WpPostNode | null }>(postBySlugQuery, { slug });
+    const data = await client.request<{ post: WpPostNode | null }>(postBySlugQuery, {
+      slug,
+      asPreview: preview,
+    });
 
-    if (!data.post || !hasRatiCategory(data.post)) {
-      return fallbackPosts.find((post) => post.slug === slug) ?? null;
+    if (!data.post || (!preview && !hasRatiCategory(data.post))) {
+      return getFallbackPost(slug);
     }
 
     return mapWpPostToUiPost(data.post);
   } catch (error) {
     console.error(`Failed to fetch WordPress post for slug ${slug}`, error);
-    return fallbackPosts.find((post) => post.slug === slug) ?? null;
+    return getFallbackPost(slug);
   }
 }
+
+export { mapBlogPostToArticleDetail };

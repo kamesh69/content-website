@@ -67,6 +67,11 @@ export type BlogPost = {
   coverImage?: string;
   author: string;
   categories: string[];
+  quote?: string;
+  closing?: string;
+  readingTime?: string;
+  sections?: ArticleSection[];
+  heroImageAlt?: string;
 };
 
 export type ArticleSection = {

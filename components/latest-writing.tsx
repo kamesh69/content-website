@@ -2,15 +2,19 @@ import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
 import type { Article } from "@/lib/types";
-import { writingIntro } from "@/lib/content/site";
+import { writingIntro as fallbackWritingIntro } from "@/lib/content/site";
 
 import styles from "./latest-writing.module.scss";
 
 type LatestWritingProps = {
   articles: Article[];
+  writingIntro?: typeof fallbackWritingIntro;
 };
 
-export function LatestWriting({ articles }: LatestWritingProps) {
+export function LatestWriting({
+  articles,
+  writingIntro = fallbackWritingIntro,
+}: LatestWritingProps) {
   return (
     <section className={styles.section} id="writing" aria-labelledby="writing-heading">
       <div className={`section-shell ${styles.inner}`}>

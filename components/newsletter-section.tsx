@@ -3,25 +3,36 @@
 import { useState, type FormEvent } from "react";
 
 import { Reveal } from "@/components/reveal";
-import { newsletter } from "@/lib/content/site";
+import { newsletter as fallbackNewsletter } from "@/lib/content/site";
 
 import styles from "./newsletter-section.module.scss";
 
 type FormState = "idle" | "loading" | "success" | "error";
 
+type NewsletterSectionProps = {
+  newsletter?: typeof fallbackNewsletter;
+};
+
 function isValidEmail(value: string) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
 }
 
-async function subscribeEmail(email: string): Promise<void> {
-  // Abstraction point for a real newsletter API.
-  await new Promise((resolve) => setTimeout(resolve, 650));
-  if (!email) {
-    throw new Error("Email is required");
+async function subscribeEmail(email: string): Promise<string> {
+  const res = await fetch("/api/subscribe", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email }),
+  });
+
+  const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.error || "Subscription failed");
   }
+
+  return data.message || "You’re subscribed. Welcome to the desk notes.";
 }
 
-export function NewsletterSection() {
+export function NewsletterSection({ newsletter = fallbackNewsletter }: NewsletterSectionProps) {
   const [email, setEmail] = useState("");
   const [state, setState] = useState<FormState>("idle");
   const [message, setMessage] = useState("");
@@ -45,13 +56,13 @@ export function NewsletterSection() {
     setMessage("");
 
     try {
-      await subscribeEmail(email.trim());
+      const successMsg = await subscribeEmail(email.trim());
       setState("success");
-      setMessage("You’re subscribed. Welcome to the desk notes.");
+      setMessage(successMsg);
       setEmail("");
-    } catch {
+    } catch (err: unknown) {
       setState("error");
-      setMessage("Something went wrong. Please try again.");
+      setMessage(err instanceof Error ? err.message : "Something went wrong. Please try again.");
     }
   };
 

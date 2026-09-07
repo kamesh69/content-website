@@ -1,11 +1,15 @@
 import Image from "next/image";
 
 import { Reveal } from "@/components/reveal";
-import { hero } from "@/lib/content/site";
+import { hero as fallbackHero } from "@/lib/content/site";
 
 import styles from "./hero.module.scss";
 
-export function Hero() {
+type HeroProps = {
+  hero?: typeof fallbackHero;
+};
+
+export function Hero({ hero = fallbackHero }: HeroProps) {
   return (
     <section className={styles.hero} id="top" aria-labelledby="hero-heading">
       <div className={`section-shell ${styles.inner}`}>

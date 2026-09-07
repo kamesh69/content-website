@@ -11,7 +11,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-final class Rati_Headless_CMS {
+if (!class_exists('Rati_Headless_CMS')) {
+    final class Rati_Headless_CMS {
     private const OPTION_KEY = 'rati_site_settings';
     private const CATEGORY_SLUG = 'rati-writing';
 
@@ -600,7 +601,7 @@ final class Rati_Headless_CMS {
         global $wp;
         $request = isset($wp->request) ? trim((string) $wp->request, '/') : '';
 
-        if ($request === 'graphql' || str_starts_with($request, 'wp-json')) {
+        if ($request === 'graphql' || strpos($request, 'wp-json') === 0) {
             return;
         }
 
@@ -887,6 +888,6 @@ final class Rati_Headless_CMS {
             ]);
         }
     }
-}
 
-Rati_Headless_CMS::init();
+    Rati_Headless_CMS::init();
+}

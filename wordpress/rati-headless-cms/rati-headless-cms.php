@@ -731,7 +731,7 @@ if (!class_exists('Rati_Headless_CMS')) {
         }
     }
 
-    public static function on_settings_updated(string $option, mixed $old, mixed $value): void {
+    public static function on_settings_updated(string $option, $old = null, $value = null): void {
         if ($option === self::OPTION_KEY) {
             self::trigger_revalidation('site-settings');
         }
